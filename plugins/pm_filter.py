@@ -358,16 +358,12 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 await query.answer(url=f"https://t.me/{temp.U_NAME}?start={ident}_{file_id}")
                 return
             else:
-                adlt = await client.send_cached_media(
-                    chat_id=query.from_user.id,
-                    file_id=file_id,
-                    caption=f_caption,
-                    protect_content=True if ident == "filep" else False 
-                )
+                adlt = await client.send_cached_media(chat_id=query.from_user.id, file_id=file_id, caption=f_caption, protect_content=True if ident == "filep" else False )
                 if settings['auto_delete']:
                     await query.answer('Check PM, I have sent files in pm deleted soon', show_alert=True)
                     await asyncio.sleep(12)
                     await adlt.delete()
+                    await message.delete()
                 else:    
                     await query.answer('Check PM, I have sent files in pm', show_alert=True)
         except UserIsBlocked:
